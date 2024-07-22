@@ -13,7 +13,10 @@ class BukuController extends Controller
      */
     public function index()
     {
-        return view('buku.index');
+        $bukus= Buku::orderBy('id', 'desc')->get();
+        return view('buku.index', [
+            'bukus'=> $bukus
+        ]);
     }
 
     /**
@@ -37,7 +40,9 @@ class BukuController extends Controller
 
         DB::beginTransaction();
         try {
-            Buku::create($validated);
+            
+            $newBuku= Buku::create($validated);
+
             DB::commit();
             return redirect()->route('buku.index')->with('success', 'Buku Created Successfully');
         } catch (\Exception $e) {
@@ -59,7 +64,9 @@ class BukuController extends Controller
      */
     public function edit(Buku $buku)
     {
-        //
+        return view('buku.edit', [
+            'buku'=> $buku
+        ]);
     }
 
     /**
@@ -67,7 +74,23 @@ class BukuController extends Controller
      */
     public function update(Request $request, Buku $buku)
     {
-        //
+        $validated = $request->validate([
+            'judul' => 'required|string|max:255',
+            'penerbit' => 'required|string|max:255',
+            'tahun' => 'required|integer|between:1900,2024',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            
+            $buku->update($validated);
+
+            DB::commit();
+            return redirect()->route('buku.index')->with('success', 'Buku Edited Successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'System error: '.$e->getMessage());
+        }
     }
 
     /**
@@ -75,6 +98,14 @@ class BukuController extends Controller
      */
     public function destroy(Buku $buku)
     {
-        //
+        try{
+            $buku->delete();
+            return redirect()->back()->with('succes','Buku deleted sussesfully');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'System eror'.$e->getMessage());
+        }
     }
 }

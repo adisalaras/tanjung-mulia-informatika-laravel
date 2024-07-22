@@ -30,11 +30,11 @@
         </div>
         <div class="form-group">
           <label>Alamat</label>
-          <input type="alamat" class="form-control" id="alamat" name="alamat" placeholder="alamat" value="{{ $anggota->alamat }}">
+          <input type="text" class="form-control" id="alamat" name="alamat" placeholder="alamat" value="{{ $anggota->alamat }}">
         </div>
         <div class="form-group">
           <label>Kota</label>
-          <input type="kota" class="form-control" id="kota" name="kota" placeholder="kota" value="{{ $anggota->kota }}">
+          <input type="text" class="form-control" id="kota" name="kota" placeholder="kota" value="{{ $anggota->kota }}">
         </div>
         <div class="form-group">
           <label>Email</label>
