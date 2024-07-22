@@ -13,7 +13,10 @@ class AnggotaController extends Controller
      */
     public function index()
     {
-        return view('anggota.index');
+        $anggotas= Anggota::orderBy('id','desc')->get();
+        return view('anggota.index', [
+            'anggotas'=> $anggotas
+        ]);
     }
 
     /**
@@ -40,7 +43,7 @@ class AnggotaController extends Controller
         try{
             if($request->hasFile('profile')){
                 $path = $request->file('profile')->store('anggotas','public');
-                $validated['cover']=$path;
+                $validated['profile']=$path;
             }
             $newAnggota= Anggota::create($validated);
 
@@ -64,17 +67,40 @@ class AnggotaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Anggota $anggota)
+    public function edit(Anggota $anggotum)
     {
-        //
+        return view('anggota.edit', [
+            'anggota' => $anggotum
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Anggota $anggota)
+    public function update(Request $request, Anggota $anggotum)
     {
-        //
+        $validated= $request->validate([
+            'nama'=> 'required|string|max:255',
+            'alamat'=> 'required|string|max:255',
+            'kota'=> 'required|string|max:255',
+            'email'=> 'required|string|max:255',
+            'profile' => 'sometimes|image|mimes:png|max:2048',
+        ]);
+        DB::beginTransaction();
+        try{
+            if($request->hasFile('profile')){
+                $path = $request->file('profile')->store('anggotas','public');
+                $validated['profile']=$path;
+            }
+            $anggotum->update($validated);
+
+            DB::commit();
+            return redirect()->route('anggota.index')->with('succes', 'Anggota Edited Succesfully');
+        }catch(\Exception $e){
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'System eror'.$e->getMessage());
+        }
     }
 
     /**
@@ -82,6 +108,11 @@ class AnggotaController extends Controller
      */
     public function destroy(Anggota $anggota)
     {
-        //
+        try {
+            $anggota->delete();
+            return redirect()->route('anggota.index')->with('success', 'Anggota deleted successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'System error: ' . $e->getMessage());
+        }
     }
 }

@@ -20,7 +20,7 @@
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form action="{{ route('anggota.store') }}" enctype="multipart/form-data" method="POST">
+    <form action="{{ route('anggotas.store') }}" enctype="multipart/form-data" method="POST">
       @csrf
       <div class="card-body">
         <div class="form-group">
