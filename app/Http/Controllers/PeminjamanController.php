@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anggota;
+use App\Models\Buku;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PeminjamanController extends Controller
 {
@@ -12,7 +15,7 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        //
+        return view('peminjaman.index');
     }
 
     /**
@@ -20,15 +23,33 @@ class PeminjamanController extends Controller
      */
     public function create()
     {
-        //
+        $anggotas = Anggota::orderBy('id', 'desc')->get();
+        $bukus = Buku::orderBy('id', 'desc')->get();
+        return view('peminjaman.create', [
+            'bukus'=> $bukus, //compact data
+            'anggotas' => $anggotas
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Buku $buku, Anggota $anggotum)
     {
-        //
+        $validated = $request->validate([
+            'anggota_id' => 'required|integer|exists:anggotas,id',
+            'buku_id' => 'required|integer|exists:bukus,id',
+        ]);
+    
+        DB::beginTransaction();
+        try {
+            $assignPeminjaman = Peminjaman::create($validated); // Menggunakan create() untuk menyimpan data
+            DB::commit();
+            return redirect()->route('peminjaman.index')->with('success', 'Peminjaman Assigned Successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'System error: ' . $e->getMessage());
+        }
     }
 
     /**

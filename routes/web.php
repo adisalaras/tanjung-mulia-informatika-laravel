@@ -15,6 +15,7 @@ Route::resource('anggota', AnggotaController::class);
 Route::resource('buku', BukuController::class );
 Route::resource('peminjaman', PeminjamanController::class);
 
+
 // Route::get('/testroute', function() {
 //     $name = "adisa";
 
