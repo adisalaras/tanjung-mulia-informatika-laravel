@@ -1,10 +1,10 @@
 @extends('layouts/app')
-    @section('title', 'Dashboard')
+    @section('title', 'Anggota')
     
 
 
 @section('content')
-<a href="#" class="btn btn-success">
+<a href="{{ route('anggota.create') }}" class="btn btn-success">
     Tambah Anggota</a>
   
 

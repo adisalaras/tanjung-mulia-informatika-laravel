@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Anggota;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AnggotaController extends Controller
 {
@@ -20,7 +21,7 @@ class AnggotaController extends Controller
      */
     public function create()
     {
-        //
+        return view('anggota.create');
     }
 
     /**
@@ -28,7 +29,28 @@ class AnggotaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated= $request->validate([
+            'nama'=> 'required|string|max:255',
+            'alamat'=> 'required|string|max:255',
+            'kota'=> 'required|string|max:255',
+            'email'=> 'required|string|max:255',
+            'profile' => 'required|image|mimes:png|max:2048',
+        ]);
+        DB::beginTransaction();
+        try{
+            if($request->hasFile('profile')){
+                $path = $request->file('profile')->store('anggotas','public');
+                $validated['cover']=$path;
+            }
+            $newAnggota= Anggota::create($validated);
+
+            DB::commit();
+            return redirect()->route('anggota.index')->with('succes', 'Anggota Created Succesfully');
+        }catch(\Exception $e){
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'System eror'.$e->getMessage());
+        }
     }
 
     /**
