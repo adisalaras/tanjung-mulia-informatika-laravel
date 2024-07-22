@@ -106,13 +106,17 @@ class AnggotaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Anggota $anggota)
+    public function destroy(Anggota $anggotum)
     {
-        try {
-            $anggota->delete();
-            return redirect()->route('anggota.index')->with('success', 'Anggota deleted successfully');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'System error: ' . $e->getMessage());
+        try{
+            $anggotum->delete();
+            return redirect()->back()->with('succes','Anggota deleted sussesfully');
         }
+        catch(\Exception $e){
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'System eror'.$e->getMessage());
+        }
+        
     }
 }

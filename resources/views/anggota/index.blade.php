@@ -48,16 +48,6 @@
                 </tr>
                 @endforelse
             </tbody>
-            <tfoot>
-                <tr>
-                    <th>Profile</th>
-                    <th>Nama</th>
-                    <th>Alamat</th>
-                    <th>Kota</th>
-                    <th>Email</th>
-                    <th>Aksi</th>
-                </tr>
-            </tfoot>
         </table>
     </div>
     <!-- /.card-body -->
