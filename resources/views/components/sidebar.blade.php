@@ -13,7 +13,7 @@
         <img src="{{ asset('dist/img/user2-160x160.jpg ') }}" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="#" class="d-block">Alexander Pierce</a>
+        <a href="#" class="d-block">Admin Sipinjam</a>
       </div>
     </div>
 
@@ -35,7 +35,7 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item menu-open">
-          <a href="#" class="nav-link active">
+          <a href="{{ route('dashboard.index') }}" class="nav-link {{ Request::is('dashboard*') ? 'active' : '' }}>
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
@@ -44,19 +44,19 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('anggota.index') }}" class="nav-link">
+              <a href="{{ route('anggota.index') }}" class="nav-link {{ Request::is('anggota*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Anggota</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('buku.index') }}" class="nav-link">
+              <a href="{{ route('buku.index') }}" class="nav-link {{ Request::is('anggota*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Buku</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link active">
+              <a href="{{ route('peminjaman.index') }}" class="nav-link {{ Request::is('anggota*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Peminjaman</p>
               </a>
