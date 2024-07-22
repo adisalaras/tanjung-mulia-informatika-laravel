@@ -20,7 +20,7 @@
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form action="{{ route('anggotas.store') }}" enctype="multipart/form-data" method="POST">
+    <form action="{{ route('anggota.store') }}" enctype="multipart/form-data" method="POST">
       @csrf
       <div class="card-body">
         <div class="form-group">
@@ -29,11 +29,11 @@
         </div>
         <div class="form-group">
           <label>Alamat</label>
-          <input type="alamat" class="form-control" id="alamat" name="alamat" placeholder="alamat">
+          <input type="text" class="form-control" id="alamat" name="alamat" placeholder="alamat">
         </div>
         <div class="form-group">
           <label>Kota</label>
-          <input type="kota" class="form-control" id="kota" name="kota" placeholder="kota">
+          <input type="text" class="form-control" id="kota" name="kota" placeholder="kota">
         </div>
         <div class="form-group">
           <label>Email</label>
