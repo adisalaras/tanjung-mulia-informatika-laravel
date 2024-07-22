@@ -15,7 +15,11 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        return view('peminjaman.index');
+        $peminjamans = Peminjaman::with(['anggota', 'buku'])->orderBy('created_at', 'desc')->get();
+
+        return view('peminjaman.index', [
+            'peminjamans' => $peminjamans,
+        ]);
     }
 
     /**
@@ -81,6 +85,16 @@ class PeminjamanController extends Controller
      */
     public function destroy(Peminjaman $peminjaman)
     {
-        //
+        try{
+            $peminjaman->delete();
+            return redirect()->back()->with('succes','Projects deleted sussesfully');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'System eror'.$e->getMessage());
+        }
     }
+
+    
 }

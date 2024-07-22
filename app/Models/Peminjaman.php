@@ -14,4 +14,17 @@ class Peminjaman extends Model
     protected $guarded= [
         'id'
     ];
+
+    public function anggota()
+    {
+        return $this->belongsTo(Anggota::class);
+    }
+
+    /**
+     * Get the buku that owns the Peminjaman.
+     */
+    public function buku()
+    {
+        return $this->belongsTo(Buku::class);
+    }
 }
