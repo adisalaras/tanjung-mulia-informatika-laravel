@@ -1,18 +1,23 @@
 @extends('layouts/app')
 @section('title', 'Buku')
+    
+
 
 @section('content')
-<!-- Tombol untuk menambah anggota -->
+{{-- Notifikasi eror --}}
 
-@if($errors->any()) 
-  <div class="alert alert-danger">
-    <ul>
-    @foreach($errors->all() as $error)
-      <li class="py-5 bg-red-500 text-white font-bold">{{ $error }}</li>
-    @endforeach
-    </ul>
-  </div>
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
 @endif
+
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">Masukan Buku</h3>
@@ -31,18 +36,21 @@
           <input type="text" class="form-control" id="penerbit" name="penerbit" placeholder="penerbit">
         </div>
         <div class="form-group">
-          <label>Tahun</label>
-          <input type="year" class="form-control" id="tahun" name="tahun" placeholder="tahun">
+          <label for="tahun">Tahun</label>
+          <select class="form-control" id="tahun" name="tahun" required>
+            <option value="" selected disabled>Pilih tahun</option>
+            @for ($year = 1900; $year <= 2024; $year++)
+                <option value="{{ $year }}">{{ $year }}</option>
+            @endfor
+          </select>
         </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
-        </div>
+        
+        
       </div>
       <!-- /.card-body -->
 
       <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Upload Anggota</button>
+        <button type="submit" class="btn btn-primary">Upload Buku</button>
       </div>
     </form>
   </div>

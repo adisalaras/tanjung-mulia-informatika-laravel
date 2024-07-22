@@ -15,12 +15,12 @@ Route::resource('anggota', AnggotaController::class);
 Route::resource('buku', BukuController::class );
 Route::resource('peminjaman', PeminjamanController::class);
 
-Route::get('/testroute', function() {
-    $name = "adisa";
+// Route::get('/testroute', function() {
+//     $name = "adisa";
 
-    $filePath = public_path('favicon.ico');
+//     $filePath = public_path('favicon.ico');
 
-    // // The email sending is done using the to method on the Mail facade
-    Mail::to('adrianramadhan881@gmail.com')->send(new MyTestEmail($name));
-});
+//     // // The email sending is done using the to method on the Mail facade
+//     Mail::to('adrianramadhan881@gmail.com')->send(new MyTestEmail($name));
+// });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Buku;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BukuController extends Controller
 {
@@ -20,7 +21,7 @@ class BukuController extends Controller
      */
     public function create()
     {
-        return view ('buku.create');
+        return view('buku.create');
     }
 
     /**
@@ -28,7 +29,21 @@ class BukuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'judul' => 'required|string|max:255',
+            'penerbit' => 'required|string|max:255',
+            'tahun' => 'required|integer|between:1900,2024',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            Buku::create($validated);
+            DB::commit();
+            return redirect()->route('buku.index')->with('success', 'Buku Created Successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'System error: '.$e->getMessage());
+        }
     }
 
     /**
