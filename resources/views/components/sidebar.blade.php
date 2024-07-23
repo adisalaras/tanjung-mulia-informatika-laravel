@@ -34,29 +34,32 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-        <li class="nav-item menu-open">
-          <a href="{{ route('dashboard.index') }}" class="nav-link {{ Request::is('dashboard*') ? 'active' : '' }}>
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>
-              Dashboard
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
+          
             <li class="nav-item">
-              <a href="{{ route('anggota.index') }}" class="nav-link {{ Request::is('anggota*') ? 'active' : '' }}">
+              <a href="{{ route('dashboard.index') }}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Dashboard
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+            </li>
+          
+          
+            <li class="nav-item">
+              <a href="{{ route('anggota.index') }}" class="nav-link {{ Request::is('anggota') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Anggota</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('buku.index') }}" class="nav-link {{ Request::is('anggota*') ? 'active' : '' }}">
+              <a href="{{ route('buku.index') }}" class="nav-link {{ Request::is('buku') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Buku</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('peminjaman.index') }}" class="nav-link {{ Request::is('anggota*') ? 'active' : '' }}">
+              <a href="{{ route('peminjaman.index') }}" class="nav-link {{ Request::is('peminjaman') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Peminjaman</p>
               </a>

@@ -26,7 +26,7 @@
             <tbody>
                 @forelse($anggotas as $anggotum)
                 <tr>
-                    <td><img src="{{ asset('storage/' . $anggotum->profile) }}" alt="" class="object-cover w-[90px] h-90px rounded-2xl"></td>
+                    <td><img src="{{ Storage::url($anggotum->profile) }}" alt="" class="object-cover w-[90px] h-90px rounded-2xl"></td>
                     <td>{{ $anggotum->nama }}</td>
                     <td>{{ $anggotum->alamat }}</td>
                     <td>{{ $anggotum->kota }}</td>
