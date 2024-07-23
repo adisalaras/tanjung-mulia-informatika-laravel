@@ -15,7 +15,7 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        $peminjamans = Peminjaman::with(['anggota', 'buku'])->orderBy('created_at', 'desc')->get();
+        $peminjamans = Peminjaman::withTrashed()->with(['anggota', 'buku'])->orderBy('created_at', 'desc')->get();
 
         return view('peminjaman.index', [
             'peminjamans' => $peminjamans,
@@ -94,6 +94,14 @@ class PeminjamanController extends Controller
 
             return redirect()->back()->with('error', 'System eror'.$e->getMessage());
         }
+    }
+
+    public function restore($id)
+    {
+        $peminjaman = Peminjaman::withTrashed()->findOrFail($id);
+        $peminjaman->restore();
+
+        return redirect()->route('peminjaman.index')->with('success', 'Peminjaman restored successfully');
     }
 
     

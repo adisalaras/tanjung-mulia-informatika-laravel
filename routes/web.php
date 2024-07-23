@@ -14,6 +14,7 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 Route::resource('anggota', AnggotaController::class);
 Route::resource('buku', BukuController::class );
 Route::resource('peminjaman', PeminjamanController::class);
+Route::put('peminjaman/{peminjaman}/restore', [PeminjamanController::class, 'restore'])->name('peminjaman.restore');
 
 
 // Route::get('/testroute', function() {

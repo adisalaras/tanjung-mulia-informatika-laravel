@@ -1,5 +1,5 @@
 @extends('layouts/app')
-@section('title', 'Buku')
+@section('title', 'Peminjaman')
 
 @section('content')
 <!-- Tombol untuk menambah anggota -->
@@ -30,21 +30,28 @@
                     <td>{{ $peminjaman->buku->judul }}</td>
                     <td>{{ $peminjaman->created_at->format('d-m-Y') }}</td>
                     <td>
-                        <!-- Link untuk edit peminjaman -->
-                        
-                        <!-- Form untuk menghapus peminjaman -->
-                        <form action="{{ route('peminjaman.destroy', $peminjaman) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="py-3 px-5 rounded-full bg-red-500 text-white">Pinjam</button>
-                        </form>
+                        @if ($peminjaman->trashed())
+                    <!-- Form untuk menyelesaikan peminjaman -->
+                    <form action="{{ route('peminjaman.restore', $peminjaman->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="py-3 px-5 rounded-full bg-green-500 text-white">Selesai</button>
+                    </form>
+                    @else
+                    <form action="{{ route('peminjaman.destroy', $peminjaman->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="py-3 px-5 rounded-full bg-red-500 text-white">Pinjam</button>
+                    </form>
+                        @endif
                     </td>
                 </tr>
                 @empty
                 <tr>
                     <td colspan="4" class="text-center">Belum Ada Peminjaman</td>
                 </tr>
-                @endforelse/tbody>
+                @endforelse
+            </tbody>
         </table>
     </div>
     <!-- /.card-body -->
